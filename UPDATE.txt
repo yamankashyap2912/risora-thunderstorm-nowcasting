@@ -1,0 +1,4 @@
+Copy these files over the same paths in your project (no backend changes, no new npm packages), then run npm run dev.
+frontend/src/App.jsx      (fixes the blank page, sign-in is now optional)
+frontend/src/Login.jsx    (now a pop-up opened from Sign in or a pricing plan)
+frontend/src/Sections.jsx (pricing buttons open sign-in)
