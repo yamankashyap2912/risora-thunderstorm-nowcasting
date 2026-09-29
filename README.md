@@ -400,7 +400,3 @@ For feeds, replace the static `SRC` list in `main.py` with real ingestion status
 - [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors: map tiles
 
 ---
-
-## License
-
-Add a license file before publishing (for example MIT) and update this section.
