@@ -36,7 +36,7 @@ export default function MapView({fr,lay,setProbe,vec,focus,xs,onLine}){
     const bd=[[5,66],[38,99]],m=L.map(el.current,{zoomControl:true,scrollWheelZoom:false,minZoom:4,maxZoom:10,zoomSnap:.25})
     m.fitBounds(bd)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(m)
-    st.current={m,ov:null,lit:L.layerGroup().addTo(m),vl:L.layerGroup().addTo(m),cit:L.layerGroup().addTo(m),tg:L.layerGroup().addTo(m),xl:L.layerGroup().addTo(m)}
+    st.current={m,ov:null,risk:L.layerGroup().addTo(m),lit:L.layerGroup().addTo(m),vl:L.layerGroup().addTo(m),cit:L.layerGroup().addTo(m),tg:L.layerGroup().addTo(m),xl:L.layerGroup().addTo(m)}
     m.on('mousemove',e=>setProbe&&setProbe({lat:e.latlng.lat,lon:e.latlng.lng}))
     m.on('click',()=>m.scrollWheelZoom.enable())
     return()=>m.remove()
@@ -47,8 +47,9 @@ export default function MapView({fr,lay,setProbe,vec,focus,xs,onLine}){
     paint(cv.current,fr,lay,[66,99,5,38])
     const url=cv.current.toDataURL()
     if(s.ov)s.ov.setUrl(url);else s.ov=L.imageOverlay(url,[[5,66],[38,99]],{opacity:.92,interactive:false}).addTo(s.m)
-    s.lit.clearLayers();s.cit.clearLayers();s.vl.clearLayers()
+    s.lit.clearLayers();s.cit.clearLayers();s.vl.clearLayers();s.risk.clearLayers()
     if(lay.vec&&vec)vec.forEach(v=>arrow(s.vl,v.a,v.b,v.kmh,v.dir))
+    if(lay.risk) fr.cities.filter(c=>c.prob>=.4).forEach(c=>{const p=c.prob;const col=p>=.85?'#e5484d':p>=.7?'#ff9d1f':'#6a8bff';L.circle([c.lat,c.lon],{radius:45000+90000*p,color:col,weight:1.5,opacity:.45,fillColor:col,fillOpacity:.08}).bindTooltip(`${c.name} modeled risk ${Math.round(p*100)}%`,{sticky:true}).addTo(s.risk)})
     if(lay.lit)fr.lightning.forEach(([lo,la])=>L.circleMarker([la,lo],{radius:fr.t>0?5:3.5,color:'#12204a',weight:1,fillColor:'#f5b301',fillOpacity:fr.t>0?.15:1}).addTo(s.lit))
     fr.cities.forEach(c=>{
       const col=c.prob>=.7?'#e5484d':c.prob>=.4?'#f5b301':'#2f5bff'

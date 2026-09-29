@@ -43,10 +43,23 @@ def train(n=9000,seed=0):
 
 def load():
     if os.path.exists(MP) and os.path.exists(SP):
-        return joblib.load(MP),json.load(open(SP))
-    return train()
+        try:
+            return joblib.load(MP), json.load(open(SP))
+        except Exception as e:
+            print(f"⚠ Existing model load failed: {e}")
 
-MODEL,SKILL=load()
+    try:
+        print("↻ Training/loading compatible Risora model...")
+        return train()
+    except Exception as e:
+        print(f"❌ Model initialization failed: {e}")
+        raise RuntimeError(
+            "Risora model could not be initialized. "
+            "Check the model dependencies and training data."
+        ) from e
+
+MODEL, SKILL = load()
+
 
 def prob(lo,la,t0,lead):
     x=features(lo,la,t0,lead,sim.CELLS,np.random.default_rng(int(lo*1000+la*10+lead)))

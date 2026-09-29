@@ -1,4 +1,18 @@
-Copy these files over the same paths in your project (no backend changes, no new npm packages), then run npm run dev.
-frontend/src/App.jsx      (fixes the blank page, sign-in is now optional)
-frontend/src/Login.jsx    (now a pop-up opened from Sign in or a pricing plan)
-frontend/src/Sections.jsx (pricing buttons open sign-in)
+RISORA FINAL SIH BUILD — 2026-09-29
+
+This package includes the enhanced responsive operational dashboard:
+- Radar / Satellite IR / Lightning / Risk surface / Alert zones / Motion vectors
+- 0 to 180 minute, 15-minute forecast playback
+- Live WebSocket alerts with severity filters
+- CAP v1.2 preview, copy and download
+- City/region risk explorer with search and map focus
+- Feed health monitoring
+- Model skill panel with synthetic-demo disclosure
+- Model provenance + SatQuery adapter boundary
+- Vertical profile / cross-section tool
+- Ask Risora assistant
+- JSON operational report and CSV alert export
+- Responsive mobile navigation and adaptive UI
+
+The bundled atmospheric fields are synthetic demo data. Connect authorized real radar,
+INSAT, lightning and NWP feeds before claiming operational forecasting performance.
